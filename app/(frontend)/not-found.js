@@ -6,6 +6,8 @@ export const metadata = {
   title: "Not found — Taufik Ismail",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function NotFound() {
   let footer = null;
   try {

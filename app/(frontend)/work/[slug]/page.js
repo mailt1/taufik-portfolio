@@ -2,14 +2,7 @@ import { notFound } from "next/navigation";
 import { getFooter, getWork, getWorks } from "@/lib/payload";
 import WorkDetailClient from "./WorkDetailClient";
 
-export async function generateStaticParams() {
-  try {
-    const works = await getWorks();
-    return works.map((w) => ({ slug: w.slug }));
-  } catch {
-    return [];
-  }
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
