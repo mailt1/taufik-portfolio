@@ -34,6 +34,8 @@ export default buildConfig({
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI || "file:./payload.db",
+      // Turso / hosted libSQL requires an auth token; ignored for local file:// URIs.
+      authToken: process.env.DATABASE_AUTH_TOKEN,
     },
   }),
   sharp,
