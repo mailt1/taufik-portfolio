@@ -5,6 +5,6 @@ out/
 *.log
 .env
 .env*.local
-payload.db
-payload.db-journal
+# payload.db
+# payload.db-journal
 public/media/
