@@ -11,13 +11,13 @@
     "payload": "payload"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "^3.84.1",
-    "@payloadcms/next": "^3.84.1",
-    "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/db-sqlite": "^3.82.1",
+    "@payloadcms/next": "^3.82.1",
+    "@payloadcms/richtext-lexical": "^3.82.1",
     "graphql": "^16.14.0",
     "lenis": "^1.1.13",
-    "next": "^16.2.6",
-    "payload": "^3.84.1",
+    "next": "^9.3.3",
+    "payload": "^3.82.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "sharp": "^0.34.5"
