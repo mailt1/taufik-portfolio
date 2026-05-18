@@ -215,6 +215,50 @@ section {
   font-size: 16px;
 }
 
+/* Wordmark: per-letter flip to italic on hover */
+.logo .logo-word {
+  display: inline-flex;
+  white-space: pre;
+  line-height: 1;
+}
+
+.logo .flip-letter {
+  display: inline-grid;
+  grid-template-areas: "stack";
+  overflow: hidden;
+  line-height: 1.05;
+  vertical-align: baseline;
+}
+
+.logo .flip-letter > span {
+  grid-area: stack;
+  display: inline-block;
+  transition: transform 0.55s var(--ease);
+  transition-delay: calc(var(--i, 0) * 28ms);
+  will-change: transform;
+}
+
+.logo .flip-letter .flip-bot {
+  font-style: italic;
+  transform: translateY(110%);
+}
+
+.logo:hover .flip-letter .flip-top,
+.logo:focus-visible .flip-letter .flip-top {
+  transform: translateY(-110%);
+}
+
+.logo:hover .flip-letter .flip-bot,
+.logo:focus-visible .flip-letter .flip-bot {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo .flip-letter > span {
+    transition: none;
+  }
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -2265,5 +2309,92 @@ section {
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
+  }
+}
+
+/* Preloader ------------------------------------------------- */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(24px, 5vw, 64px);
+  transform: translateY(0);
+  transition: transform 0.9s var(--ease);
+  pointer-events: all;
+}
+
+.preloader.is-leaving {
+  transform: translateY(-100%);
+}
+
+.preloader-corner {
+  display: flex;
+  flex-direction: column;
+}
+
+.preloader-corner--bottom {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.preloader-name {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: preloader-rise 0.8s var(--ease) 0.1s forwards;
+}
+
+.preloader-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: preloader-rise 0.8s var(--ease) 0.3s forwards;
+}
+
+.preloader-pct {
+  font-family: var(--font-mono);
+  font-size: clamp(48px, 8vw, 120px);
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes preloader-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    transition: opacity 0.4s ease;
+  }
+
+  .preloader.is-leaving {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  .preloader-name,
+  .preloader-meta {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

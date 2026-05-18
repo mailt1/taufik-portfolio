@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
+const LOGO_NAME = "Taufik Ismail";
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
@@ -31,7 +33,18 @@ export default function Header() {
         onClick={(e) => go(e, "top")}
       >
         <span className="dot" />
-        <span>Taufik Ismail</span>
+        <span className="logo-word" aria-hidden="true">
+          {LOGO_NAME.split("").map((ch, i) => (
+            <span
+              key={i}
+              className={`flip-letter${ch === " " ? " is-space" : ""}`}
+              style={{ "--i": i }}
+            >
+              <span className="flip-top">{ch === " " ? " " : ch}</span>
+              <span className="flip-bot">{ch === " " ? " " : ch}</span>
+            </span>
+          ))}
+        </span>
         <em></em>
       </a>
       <nav className="nav" aria-label="Primary">

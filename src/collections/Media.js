@@ -3,9 +3,9 @@ export const Media = {
   upload: {
     staticDir: "public/media",
     imageSizes: [
-      { name: "thumbnail", width: 480 },
-      { name: "card", width: 900 },
-      { name: "feature", width: 1600 },
+      { name: "thumbnail", width: 960 },
+      { name: "card", width: 1800 },
+      { name: "feature", width: 3200 },
     ],
     mimeTypes: ["image/*"],
   },

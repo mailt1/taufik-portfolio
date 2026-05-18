@@ -1,6 +1,7 @@
 import Script from "next/script";
 import Header from "../_components/Header";
 import LenisProvider from "../_components/LenisProvider";
+import Preloader from "../_components/Preloader";
 import ScrollReset from "../_components/ScrollReset";
 import TweaksProvider from "../_components/Tweaks";
 import "../globals.css";
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <Preloader />
         <LenisProvider />
         <ScrollReset />
         <TweaksProvider>
