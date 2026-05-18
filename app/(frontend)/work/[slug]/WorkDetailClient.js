@@ -3,6 +3,7 @@
 import Link from "next/link";
 import ArrowIcon from "../../../_components/ArrowIcon";
 import Footer from "../../../_components/Footer";
+import MediaTag from "../../../_components/MediaTag";
 import { useReveal } from "../../../_hooks/useReveal";
 
 function CaseHero({ work, total }) {
@@ -51,25 +52,14 @@ function CaseHero({ work, total }) {
 
 function CaseImage({ slot, ratio = "16/9", className = "" }) {
   const media = slot && typeof slot.image === "object" ? slot.image : null;
-  const url = media?.url || null;
   const alt = media?.alt || "";
   return (
     <div
       className={`case-image ${className} reveal`}
       style={{ aspectRatio: ratio }}
     >
-      {url ? (
-        <img
-          src={url}
-          alt={alt}
-          loading="lazy"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
-        />
+      {media ? (
+        <MediaTag media={media} alt={alt} className="case-image-media" />
       ) : (
         <div className="thumb-placeholder" />
       )}

@@ -10,7 +10,7 @@ export const Media = {
         position: "centre",
       },
     ],
-    mimeTypes: ["image/*"],
+    mimeTypes: ["image/*", "video/*"],
   },
   fields: [
     { name: "alt", type: "text" },

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import ArrowIcon from "./ArrowIcon";
+import MediaTag from "./MediaTag";
 
 export default function WorkCard({ w, i }) {
   const slot = w?.media?.thumbnail;
   const visible = !slot || slot.visible !== false;
   const media = visible && slot && typeof slot.image === "object" ? slot.image : null;
-  const thumbUrl = media?.sizes?.thumbnail?.url || media?.url || null;
   const thumbAlt = media?.alt || w.title;
 
   return (
@@ -14,12 +14,12 @@ export default function WorkCard({ w, i }) {
       className={`work-card reveal ${i % 2 === 1 ? "is-offset" : ""}`}
     >
       <div className="wc-thumb">
-        {thumbUrl ? (
-          <img
-            src={thumbUrl}
+        {media ? (
+          <MediaTag
+            media={media}
             alt={thumbAlt}
             className="wc-img"
-            loading="lazy"
+            preferThumbnail
           />
         ) : (
           <div className="thumb-placeholder" />
@@ -28,11 +28,6 @@ export default function WorkCard({ w, i }) {
           <span className="wc-cta">
             View case study <ArrowIcon direction="up-right" className="arr" />
           </span>
-        </div>
-        <div className="wc-tag">
-          <span>{w.client}</span>
-          <span className="dot-tiny" />
-          <span>{w.year}</span>
         </div>
       </div>
       <div className="wc-caption">
