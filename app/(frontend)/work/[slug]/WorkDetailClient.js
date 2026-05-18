@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ArrowIcon from "../../../_components/ArrowIcon";
 import Footer from "../../../_components/Footer";
 import { useReveal } from "../../../_hooks/useReveal";
 
@@ -9,7 +10,7 @@ function CaseHero({ work, total }) {
     <section className="case-hero shell">
       <div className="case-hero-top reveal">
         <Link href="/" className="back-link">
-          <span className="arr">←</span> All works
+          <ArrowIcon direction="left" className="arr" /> All works
         </Link>
         <span className="t-eyebrow">
           {work.idx} / {String(total).padStart(2, "0")}
@@ -135,7 +136,7 @@ function NextProject({ next }) {
         <div className="next-title t-display">
           <span>{next.title}</span>
           <em>— {next.italic}</em>
-          <span className="next-arrow">↗</span>
+          <ArrowIcon direction="up-right" className="next-arrow" />
         </div>
         <div className="next-meta">
           <span className="t-mono">

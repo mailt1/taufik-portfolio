@@ -11,6 +11,7 @@ export default function Preloader() {
     if (typeof window === "undefined") return;
 
     if (sessionStorage.getItem("preloaded") === "1") {
+      document.documentElement.classList.add("is-loaded");
       setDone(true);
       return;
     }
@@ -43,14 +44,23 @@ export default function Preloader() {
 
   useEffect(() => {
     if (!leaving) return;
-    const id = setTimeout(() => {
+    // Trigger title reveals slightly before the wipe finishes so they
+    // appear behind the wipe as the curtain rises.
+    const revealId = setTimeout(() => {
+      document.documentElement.classList.add("is-loaded");
+    }, 250);
+    const doneId = setTimeout(() => {
       sessionStorage.setItem("preloaded", "1");
+      document.documentElement.classList.add("preloaded");
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       window.__lenis?.start?.();
       setDone(true);
     }, 950);
-    return () => clearTimeout(id);
+    return () => {
+      clearTimeout(revealId);
+      clearTimeout(doneId);
+    };
   }, [leaving]);
 
   if (done) return null;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ArrowIcon from "./ArrowIcon";
 
 export default function WorkCard({ w, i }) {
   const slot = w?.media?.thumbnail;
@@ -25,7 +26,7 @@ export default function WorkCard({ w, i }) {
         )}
         <div className="wc-overlay">
           <span className="wc-cta">
-            View case study <span className="arr">↗</span>
+            View case study <ArrowIcon direction="up-right" className="arr" />
           </span>
         </div>
         <div className="wc-tag">

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import ArrowIcon from "./ArrowIcon";
 
 const LOGO_NAME = "Taufik Ismail";
 
@@ -65,7 +66,7 @@ export default function Header() {
         rel="noopener"
 
       >
-        Resume <span className="arr">↗</span>
+        Resume <ArrowIcon direction="up-right" className="arr" />
       </a>
     </header>
   );

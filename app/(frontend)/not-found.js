@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ArrowIcon from "../_components/ArrowIcon";
 import Footer from "../_components/Footer";
 import { getFooter } from "@/lib/payload";
 
@@ -30,7 +31,7 @@ export default async function NotFound() {
         </p>
         <div className="nf-actions">
           <Link href="/" className="nf-back-link">
-            <span className="arr">←</span> Back to home
+            <ArrowIcon direction="left" className="arr" /> Back to home
           </Link>
         </div>
       </section>

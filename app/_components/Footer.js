@@ -1,6 +1,7 @@
 "use client";
 
 import { useClock } from "../_hooks/useClock";
+import ArrowIcon from "./ArrowIcon";
 
 const DEFAULT_EMAIL = "taufikismail891@gmail.com";
 const DEFAULT_SOCIALS = [
@@ -25,14 +26,14 @@ export default function Footer({ email, socials }) {
         </h2>
         <div className="email-row">
           <a className="email-link" href={`mailto:${mailTo}`}>
-            {mailTo} <span className="arr">↗</span>
+            {mailTo} <ArrowIcon direction="up-right" className="arr" />
           </a>
 
           <ul className="socials">
             {links.map((s, i) => (
               <li key={s.url || i}>
                 <a href={s.url} target="_blank" rel="noopener">
-                  {s.label} <span className="arr">↗</span>
+                  {s.label} <ArrowIcon direction="up-right" className="arr" />
                 </a>
               </li>
             ))}

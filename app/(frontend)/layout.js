@@ -48,6 +48,12 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('preloaded')==='1'){var h=document.documentElement;h.classList.add('preloaded');requestAnimationFrame(function(){h.classList.add('is-loaded');});}}catch(e){}",
+          }}
+        />
       </head>
       <body>
         <Preloader />

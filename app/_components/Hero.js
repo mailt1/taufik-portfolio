@@ -1,6 +1,7 @@
 "use client";
 
 import { useClock } from "../_hooks/useClock";
+import ArrowIcon from "./ArrowIcon";
 
 const DEFAULT_TAGLINE =
   "Senior UI designer crafting pixel-perfect interfaces and scalable systems.";
@@ -35,7 +36,7 @@ export default function Hero({ tagline }) {
         <div className="scroll-cue">
           <span>Scroll</span>
           <span className="line" />
-          <span>↓</span>
+          <ArrowIcon direction="down" />
         </div>
         <div style={{ textAlign: "right" }}>
           <div className="t-eyebrow" style={{ marginBottom: 6 }}>

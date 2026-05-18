@@ -140,6 +140,15 @@ section {
   width: 100%;
 }
 
+/* Icon arrows ------------------------------------------------- */
+
+.icon-arrow {
+  display: inline-block;
+  vertical-align: -0.12em;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
 /* Reveal animation ------------------------------------------- */
 
 .reveal {
@@ -2396,5 +2405,78 @@ section {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Skip preloader entirely if it already played this session. */
+html.preloaded .preloader {
+  display: none !important;
+}
+
+/* Load-in animations triggered after preloader exits ---------- */
+
+.site-header {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.8s var(--ease) 0.25s,
+    transform 0.8s var(--ease) 0.25s;
+}
+
+html.is-loaded .site-header {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero headline: per-row mask reveal */
+.hero-headline .row {
+  overflow: hidden;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.hero-headline .row > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.1s var(--ease);
+  will-change: transform;
+}
+
+.hero-headline .row:nth-child(1) > span { transition-delay: 0.10s; }
+.hero-headline .row:nth-child(2) > span { transition-delay: 0.20s; }
+.hero-headline .row:nth-child(3) > span { transition-delay: 0.30s; }
+.hero-headline .row:nth-child(4) > span { transition-delay: 0.40s; }
+.hero-headline .row:nth-child(5) > span { transition-delay: 0.50s; }
+.hero-headline .row:nth-child(6) > span { transition-delay: 0.60s; }
+
+html.is-loaded .hero-headline .row > span {
+  transform: translateY(0);
+}
+
+/* Hero meta row fades in after headline */
+.hero-foot {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s var(--ease) 0.85s,
+    transform 0.9s var(--ease) 0.85s;
+}
+
+html.is-loaded .hero-foot {
+  opacity: 1;
+  transform: none;
+}
+
+/* Case detail title also reveals on load (when navigated to directly) */
+html.is-loaded .case-title.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .hero-headline .row > span,
+  .hero-foot {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
