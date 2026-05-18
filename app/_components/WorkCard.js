@@ -4,7 +4,7 @@ export default function WorkCard({ w, i }) {
   const slot = w?.media?.thumbnail;
   const visible = !slot || slot.visible !== false;
   const media = visible && slot && typeof slot.image === "object" ? slot.image : null;
-  const thumbUrl = media?.url || null;
+  const thumbUrl = media?.sizes?.thumbnail?.url || media?.url || null;
   const thumbAlt = media?.alt || w.title;
 
   return (

@@ -3,9 +3,12 @@ export const Media = {
   upload: {
     staticDir: "public/media",
     imageSizes: [
-      { name: "thumbnail", width: 960 },
-      { name: "card", width: 1800 },
-      { name: "feature", width: 3200 },
+      {
+        name: "thumbnail",
+        width: 633,
+        height: 792,
+        position: "centre",
+      },
     ],
     mimeTypes: ["image/*"],
   },
