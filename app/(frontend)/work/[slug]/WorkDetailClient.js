@@ -50,8 +50,8 @@ function CaseHero({ work, total }) {
   );
 }
 
-function CaseImage({ slot, ratio = "16/9", className = "" }) {
-  const media = slot && typeof slot.image === "object" ? slot.image : null;
+function CaseImage({ image, ratio = "16/9", className = "" }) {
+  const media = image && typeof image === "object" ? image : null;
   const alt = media?.alt || "";
   return (
     <div
@@ -67,30 +67,51 @@ function CaseImage({ slot, ratio = "16/9", className = "" }) {
   );
 }
 
-function CaseSection({ eyebrow, heading, body, children }) {
+// Renders a title split into a roman part + an italic part, e.g. The *brief*.
+function DisplayHeading({ title, italic }) {
+  const hasTitle = !!(title && String(title).trim());
+  const hasItalic = !!(italic && String(italic).trim());
+  if (!hasTitle && !hasItalic) return null;
+  return (
+    <>
+      {hasTitle ? title : null}
+      {hasItalic ? (
+        <>
+          {hasTitle ? " " : null}
+          <em>{italic}</em>
+        </>
+      ) : null}
+      .
+    </>
+  );
+}
+
+function CaseSection({ subtitle, title, italic, body }) {
+  const hasHeading = !!(title || italic);
   return (
     <section className="case-section shell">
       <div className="case-section-head reveal">
-        {eyebrow && <span className="t-eyebrow">{eyebrow}</span>}
-        {heading && (
-          <h2 className="case-section-heading t-display">{heading}</h2>
+        {subtitle && <span className="t-eyebrow">{subtitle}</span>}
+        {hasHeading && (
+          <h2 className="case-section-heading t-display">
+            <DisplayHeading title={title} italic={italic} />
+          </h2>
         )}
       </div>
       {body && <p className="case-section-body reveal">{body}</p>}
-      {children}
     </section>
   );
 }
 
-function CaseStats({ stats }) {
-  const visible = (stats || []).filter((s) => s && s.visible !== false);
+function CaseStats({ subtitle, title, italic, items }) {
+  const visible = (items || []).filter((s) => s && s.visible !== false);
   if (!visible.length) return null;
   return (
     <section className="case-stats shell reveal">
       <div className="case-stats-head">
-        <span className="t-eyebrow">Outcome</span>
+        {subtitle && <span className="t-eyebrow">{subtitle}</span>}
         <h3 className="t-display">
-          By the <em>numbers.</em>
+          <DisplayHeading title={title} italic={italic} />
         </h3>
       </div>
       <div className="case-stats-grid">
@@ -139,102 +160,64 @@ function NextProject({ next }) {
   );
 }
 
-const isVisible = (slot) => !!slot && slot.visible !== false;
+function ContentBlock({ block }) {
+  if (!block || block.visible === false) return null;
+  switch (block.blockType) {
+    case "textSection":
+      return (
+        <CaseSection
+          subtitle={block.subtitle}
+          title={block.title}
+          italic={block.italic}
+          body={block.body}
+        />
+      );
+    case "image":
+      return (
+        <div className="case-block shell">
+          <CaseImage image={block.image} ratio={block.ratio || "16/9"} />
+        </div>
+      );
+    case "imagePair": {
+      if (!block.imageLeft && !block.imageRight) return null;
+      const ratio = block.ratio || "1/1";
+      return (
+        <div className="case-block case-block-2 shell">
+          {block.imageLeft && <CaseImage image={block.imageLeft} ratio={ratio} />}
+          {block.imageRight && <CaseImage image={block.imageRight} ratio={ratio} />}
+        </div>
+      );
+    }
+    case "quote":
+      return <CaseQuote quote={block.quote} />;
+    case "stats":
+      return (
+        <CaseStats
+          subtitle={block.subtitle}
+          title={block.title}
+          italic={block.italic}
+          items={block.items}
+        />
+      );
+    default:
+      return null;
+  }
+}
 
 export default function WorkDetailClient({ work, works, footer }) {
   useReveal([work.slug]);
   const total = works.length;
   const currentIdx = works.findIndex((w) => w.slug === work.slug);
   const next = works[(currentIdx + 1) % total];
-  const m = work.media || {};
+  const blocks = Array.isArray(work.content) ? work.content : [];
 
   return (
     <article className="case-study">
       <CaseHero work={work} total={total} />
 
-      {isVisible(m.b1) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b1} ratio="16/8" />
-        </div>
-      )}
-
-      {isVisible(m.b2) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b2} ratio="16/10" />
-        </div>
-      )}
-
-      <CaseSection
-        eyebrow="Overview"
-        heading={
-          <>
-            The <em>brief</em>.
-          </>
-        }
-        body={work.overview}
-      />
-
-      {(isVisible(m.b3a) || isVisible(m.b3b)) && (
-        <div className="case-block case-block-2 shell">
-          {isVisible(m.b3a) && <CaseImage slot={m.b3a} ratio="1/1" />}
-          {isVisible(m.b3b) && <CaseImage slot={m.b3b} ratio="1/1" />}
-        </div>
-      )}
-
-      {isVisible(m.b4) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b4} ratio="16/10" />
-        </div>
-      )}
-
-      <CaseSection
-        eyebrow="Context"
-        heading={
-          <>
-            The <em>problem</em>.
-          </>
-        }
-        body={work.problem}
-      />
-
-      {isVisible(m.b5) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b5} ratio="16/10" />
-        </div>
-      )}
-
-      <CaseSection
-        eyebrow="Approach"
-        heading={
-          <>
-            The <em>solution</em>.
-          </>
-        }
-        body={work.approach}
-      />
-
-      {(isVisible(m.b6a) || isVisible(m.b6b)) && (
-        <div className="case-block case-block-2 shell">
-          {isVisible(m.b6a) && <CaseImage slot={m.b6a} ratio="1/1" />}
-          {isVisible(m.b6b) && <CaseImage slot={m.b6b} ratio="1/1" />}
-        </div>
-      )}
-
-      <CaseQuote quote={work.quote} />
-
-      {isVisible(m.b7) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b7} ratio="4/3" />
-        </div>
-      )}
-
-      {isVisible(m.b8) && (
-        <div className="case-block shell">
-          <CaseImage slot={m.b8} ratio="4/3" />
-        </div>
-      )}
-
-      <CaseStats stats={work.stats} />
+      {blocks.map((block, i) => (
+        <ContentBlock key={block.id || i} block={block} />
+      ))}
 
       <NextProject next={next} />
 

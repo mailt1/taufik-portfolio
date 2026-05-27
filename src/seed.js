@@ -60,6 +60,20 @@ async function seedAdminUser(payload) {
   );
 }
 
+function buildSeedContent(w) {
+  const blocks = [
+    { blockType: "textSection", subtitle: "Overview", title: "The", italic: "brief", body: w.overview ?? "", visible: true },
+    { blockType: "textSection", subtitle: "Context", title: "The", italic: "problem", body: w.problem ?? "", visible: true },
+    { blockType: "textSection", subtitle: "Approach", title: "The", italic: "solution", body: w.approach ?? "", visible: true },
+  ];
+  if (w.quote) blocks.push({ blockType: "quote", quote: w.quote, visible: true });
+  const items = (w.stats || []).map((s) => ({ label: s.label, value: s.value, visible: s.visible !== false }));
+  if (items.length) {
+    blocks.push({ blockType: "stats", subtitle: "Outcome", title: "By the", italic: "numbers", items, visible: true });
+  }
+  return blocks;
+}
+
 async function seedWorks(payload) {
   const existing = await payload.find({ collection: "works", limit: 1 });
   if (existing.totalDocs > 0) return;
@@ -80,11 +94,7 @@ async function seedWorks(payload) {
         sector: w.sector,
         services: w.services,
         tagline: w.tagline,
-        overview: w.overview,
-        problem: w.problem,
-        approach: w.approach,
-        quote: w.quote,
-        stats: w.stats,
+        content: buildSeedContent(w),
       },
     });
   }
